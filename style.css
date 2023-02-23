@@ -1,0 +1,155 @@
+* {
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 1px;
+}
+
+body {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 70px;
+    margin: 20px;
+    background-clip: text;
+    background-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red);
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    font-size: 50px;
+    margin-top: 0px;
+}
+
+.black-grid {
+    border: 0.5px solid black;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    border: 2px solid black;
+    width: 500px;
+    height: 500px;
+    box-shadow: 2px 4px 20px -5px black;
+    margin-top: 20px;
+}
+
+.grid-element:hover {
+    cursor: crosshair;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    align-items: center;
+}
+
+.range {
+    font-size: 30px;
+    margin-top: 40px;
+}
+
+.range-line {
+    margin-bottom: 20px;
+    cursor: grab;
+}
+
+.range-line:active {
+    cursor: grabbing;
+}
+
+.btn {
+    margin: 15px;
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 200px;
+    color: white;
+    background-color: rgb(50, 49, 49);
+    border: 2px solid gray;
+    box-shadow: 0px 5px rgb(117, 110, 110);
+}
+
+.btn:hover {
+    background-color: rgb(56, 100, 232);
+    width: 240px;
+    border-radius: 5px;
+    transition: 0.1s;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.btn:active {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px gray;
+    transition: 0.1s;
+}
+
+footer {
+    margin-top: 80px;
+    font-size: 30px;
+}
+
+footer a {
+    text-decoration: none;
+    color: black
+}
+
+footer a:hover {
+    transition: 0.2s;
+    color: rgb(106, 1, 50)
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 1040px) {
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    h1 {
+        font-size: 50px;
+    }
+    h2 {
+        font-size: 40px;
+    }
+
+    .grid {
+        width: 400px;
+        height: 400px;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+    }
+
+    .range, .range-line {
+        grid-column: span 2;
+        text-align: center;
+    }
+
+    .btn:hover {
+        letter-spacing: 1px;
+        width: 200px;
+        border-radius: 0px;
+    }
+
+    footer {
+        margin-top: 40px;
+        font-size: 25px;
+    }
+
+    .show-grid {
+        grid-column: span 2;
+        justify-self: center;
+    }
+}
