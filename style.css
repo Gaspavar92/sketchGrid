@@ -149,7 +149,7 @@ footer a:hover {
         font-size: 25px;
     }
 
-    .show-grid {
+    .color {
         grid-column: span 2;
         justify-self: center;
     }

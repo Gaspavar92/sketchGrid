@@ -7,16 +7,21 @@ const rangeInput = document.getElementById("range");
 const rangeText = document.querySelector(".range");
 const showGrid = document.querySelector(".show-grid");
 const gridSquare = document.querySelector(".grid-element");
-const rainbowButton = document.querySelector(".rainbow")
-
+const rainbowButton = document.querySelector(".rainbow");
+const eraserButton = document.querySelector(".eraser");
+const colorButton = document.querySelector(".color");
 
 let currentMode;
 
 const changeMode = () => {
     if (currentMode == blackGrids) {
         blackGrids();
-    } else if (currentMode == rainbowGrids) {
-        rainbowGrids();
+        removeRainbowGrids();
+        //to complete for color mode
+    } else if (currentMode == colorMode) {
+        removeRainbowGrids();
+        removeBlackGrids();
+        // to complete for color mode
     }
 }
 
@@ -188,14 +193,10 @@ grid.childNodes.forEach((gridElements) => {
 
 rainbowButton.addEventListener("click", (button) => {
     if (button.target.textContent.includes("Rainbow")) {
-        // currentMode = rainbowGrids;
-        // changeMode();
         button.target.textContent = "Black Mode"
         removeBlackGrids();
         rainbowGrids()
     } else if (button.target.textContent.includes("Black")) {
-        // currentMode = blackGrids;
-        // changeMode();
         button.target.textContent = "Rainbow Mode"
         removeRainbowGrids();
         blackGrids();
@@ -203,6 +204,60 @@ rainbowButton.addEventListener("click", (button) => {
 })
 
 // Creating a function to use the eraser
+
+const whiteDiv = (element) => {
+    element.target.style.backgroundColor = "white";
+}
+
+function whiteGrid() {
+    for (let i = 0; i < grid.childNodes.length; i++) {
+            grid.childNodes[i].addEventListener("mouseover", whiteDiv)
+    }
+}
+
+function removeWhiteGrid() {
+    for (let i = 0; i < grid.childNodes.length; i++) {
+        grid.childNodes[i].removeEventListener("mouseover", whiteDiv)
+    }
+}
+
+function turnOnWhiteGrid(event) {
+    event.preventDefault();
+    whiteGrid();
+}
+
+function whiteGrids() {
+    grid.childNodes.forEach((gridElements) => {
+    gridElements.addEventListener("mousedown", turnOnWhiteGrid)
+})
+
+grid.childNodes.forEach((gridElements) => {
+    gridElements.addEventListener("mouseup", removeWhiteGrid)
+})
+}
+
+function removeWhiteGrids() {
+    grid.childNodes.forEach((gridElements) => {
+        gridElements.removeEventListener("mousedown", turnOnWhiteGrid)
+    })
+    
+    grid.childNodes.forEach((gridElements) => {
+        gridElements.removeEventListener("mouseup", removeWhiteGrid)
+    })
+}
+
+eraserButton.addEventListener("click", (button) => {
+    if (button.target.textContent.includes("Eraser")) {
+        button.target.textContent = "Black Mode"
+        removeBlackGrids();
+        removeRainbowGrids();
+        whiteGrids()
+    } else if (button.target.textContent.includes("Black")) {
+        button.target.textContent = "Eraser"
+        removeWhiteGrids();
+        blackGrids();
+    } 
+})
 
 // Creating a function to use the color
 
