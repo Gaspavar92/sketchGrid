@@ -3,10 +3,23 @@
 
 const grid = document.querySelector(".grid");
 const rangeInput = document.getElementById("range");
-let gridColor = blackGrids;
 
 const rangeText = document.querySelector(".range");
 const showGrid = document.querySelector(".show-grid");
+const gridSquare = document.querySelector(".grid-element");
+const rainbowButton = document.querySelector(".rainbow")
+
+
+let currentMode;
+
+const changeMode = () => {
+    if (currentMode == blackGrids) {
+        blackGrids();
+    }
+    if (currentMode == rainbowGrids) {
+        rainbowGrids();
+    }
+}
 
 let i = 0;
 
@@ -21,11 +34,11 @@ function setInitialGrid() {
         i++;
         rangeInput.value = 16;
     }
+    blackGrids();
     i = 0;
 }
 
 setInitialGrid()
-
 
 
 // Function to update grid template
@@ -42,7 +55,7 @@ function updateGrid() {
         i++;
     }
     i = 0;
-    blackGrids();
+    changeMode()
     showGrid.textContent = "Show Grid"
     rangeText.textContent = `${rangeInput.value} x ${rangeInput.value}`
 }
@@ -55,19 +68,17 @@ const blackDiv = (element) => {
 
 function blackGrid() {
     for (let i = 0; i < grid.childNodes.length; i++) {
-            grid.childNodes[i].addEventListener("mousemove", blackDiv)
+            grid.childNodes[i].addEventListener("mouseover", blackDiv)
     }
 }
 
 function removeBlackGrid() {
     for (let i = 0; i < grid.childNodes.length; i++) {
-        grid.childNodes[i].removeEventListener("mousemove", blackDiv)
-}
+        grid.childNodes[i].removeEventListener("mouseover", blackDiv)
+    }
 }
 
 // Executing program
-
-const gridSquare = document.querySelector(".grid-element");
 
 function blackGrids() {
     grid.childNodes.forEach((gridElements) => {
@@ -83,8 +94,6 @@ grid.childNodes.forEach((gridElements) => {
     })
 })
 }
-
-blackGrids()
 
 // Creating function to clear grid
 
@@ -124,14 +133,54 @@ showGridFunction();
 
 // Creating a function to randomize the color of the trail
 
+const rainbowDiv = (element) => {
+    const red = Math.floor(Math.random() * 255)
+    const green = Math.floor(Math.random() * 255)
+    const blue = Math.floor(Math.random() * 255)
+    element.target.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`
+}
+
+function rainbowGrid() {
+    for (let i = 0; i < grid.childNodes.length; i++) {
+            grid.childNodes[i].addEventListener("mouseover", rainbowDiv)
+    }
+}
+
+function removeRainbowGrid() {
+    for (let i = 0; i < grid.childNodes.length; i++) {
+        grid.childNodes[i].removeEventListener("mouseover", rainbowDiv)
+    }
+}
+
+function rainbowGrids() {
+    grid.childNodes.forEach((gridElements) => {
+    gridElements.addEventListener("mousedown", (event) => {
+        event.preventDefault();
+        rainbowGrid();
+    })
+})
+
+grid.childNodes.forEach((gridElements) => {
+    gridElements.addEventListener("mouseup", () => {
+        removeRainbowGrid();
+    })
+})
+}
+
+rainbowButton.addEventListener("click", (button) => {
+    if (button.target.textContent == "Black Mode") {
+        currentMode = blackGrids;
+        console.log(currentMode)
+        changeMode();
+        button.target.textContent = "Rainbow Mode"
+    } else if (button.target.textContent == "Rainbow Mode") {
+        currentMode = rainbowGrids;
+        console.log(currentMode)
+        changeMode();
+        button.target.textContent = "Black Mode"
+    }
+})
+
 // Creating a function to use the eraser
 
 // Creating a function to use the color
-
-
-
-
-
-
-
-
