@@ -15,8 +15,7 @@ let currentMode;
 const changeMode = () => {
     if (currentMode == blackGrids) {
         blackGrids();
-    }
-    if (currentMode == rainbowGrids) {
+    } else if (currentMode == rainbowGrids) {
         rainbowGrids();
     }
 }
@@ -55,7 +54,8 @@ function updateGrid() {
         i++;
     }
     i = 0;
-    changeMode()
+    blackGrids();
+    rainbowButton.textContent = "Rainbow Mode"
     showGrid.textContent = "Show Grid"
     rangeText.textContent = `${rangeInput.value} x ${rangeInput.value}`
 }
@@ -78,21 +78,29 @@ function removeBlackGrid() {
     }
 }
 
-// Executing program
+function turnOnBlackGrid(event) {
+    event.preventDefault();
+    blackGrid();
+}
 
 function blackGrids() {
     grid.childNodes.forEach((gridElements) => {
-    gridElements.addEventListener("mousedown", (event) => {
-        event.preventDefault();
-        blackGrid();
-    })
+    gridElements.addEventListener("mousedown", turnOnBlackGrid)
 })
 
 grid.childNodes.forEach((gridElements) => {
-    gridElements.addEventListener("mouseup", () => {
-        removeBlackGrid();
-    })
+    gridElements.addEventListener("mouseup", removeBlackGrid)
 })
+}
+
+function removeBlackGrids() {
+    grid.childNodes.forEach((gridElements) => {
+        gridElements.removeEventListener("mousedown", turnOnBlackGrid)
+    })
+    
+    grid.childNodes.forEach((gridElements) => {
+        gridElements.removeEventListener("mouseup", removeBlackGrid)
+    })
 }
 
 // Creating function to clear grid
@@ -152,35 +160,50 @@ function removeRainbowGrid() {
     }
 }
 
+function turnOnRainbowGrid(event) {
+    event.preventDefault();
+    rainbowGrid();
+}
+
 function rainbowGrids() {
     grid.childNodes.forEach((gridElements) => {
-    gridElements.addEventListener("mousedown", (event) => {
-        event.preventDefault();
-        rainbowGrid();
-    })
+    gridElements.addEventListener("mousedown", turnOnRainbowGrid)
 })
 
 grid.childNodes.forEach((gridElements) => {
-    gridElements.addEventListener("mouseup", () => {
-        removeRainbowGrid();
-    })
+    gridElements.addEventListener("mouseup", removeRainbowGrid)
 })
 }
 
+function removeRainbowGrids() {
+    grid.childNodes.forEach((gridElements) => {
+    gridElements.removeEventListener("mousedown", turnOnRainbowGrid)
+})
+
+grid.childNodes.forEach((gridElements) => {
+    gridElements.removeEventListener("mouseup", removeRainbowGrid)
+})
+}
+
+
 rainbowButton.addEventListener("click", (button) => {
-    if (button.target.textContent == "Black Mode") {
-        currentMode = blackGrids;
-        console.log(currentMode)
-        changeMode();
-        button.target.textContent = "Rainbow Mode"
-    } else if (button.target.textContent == "Rainbow Mode") {
-        currentMode = rainbowGrids;
-        console.log(currentMode)
-        changeMode();
+    if (button.target.textContent.includes("Rainbow")) {
+        // currentMode = rainbowGrids;
+        // changeMode();
         button.target.textContent = "Black Mode"
-    }
+        removeBlackGrids();
+        rainbowGrids()
+    } else if (button.target.textContent.includes("Black")) {
+        // currentMode = blackGrids;
+        // changeMode();
+        button.target.textContent = "Rainbow Mode"
+        removeRainbowGrids();
+        blackGrids();
+    } 
 })
 
 // Creating a function to use the eraser
 
 // Creating a function to use the color
+
+
