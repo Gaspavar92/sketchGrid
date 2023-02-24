@@ -261,4 +261,55 @@ eraserButton.addEventListener("click", (button) => {
 
 // Creating a function to use the color
 
+let color;
 
+const getColor = () => {
+    color = colorButton.value;
+    removeBlackGrids();
+    removeRainbowGrids();
+    removeWhiteGrids();
+}
+
+colorButton.addEventListener("input", getColor)
+colorButton.addEventListener("click", colorGrids)
+
+const colorDiv = (element) => {
+    element.target.style.backgroundColor = color;
+}
+
+function colorGrid() {
+    for (let i = 0; i < grid.childNodes.length; i++) {
+            grid.childNodes[i].addEventListener("mouseover", colorDiv)
+    }
+}
+
+function removeColorGrid() {
+    for (let i = 0; i < grid.childNodes.length; i++) {
+        grid.childNodes[i].removeEventListener("mouseover", colorDiv)
+    }
+}
+
+function turnOnColorGrid(event) {
+    event.preventDefault();
+    colorGrid();
+}
+
+function colorGrids() {
+    grid.childNodes.forEach((gridElements) => {
+    gridElements.addEventListener("mousedown", turnOnColorGrid)
+})
+
+grid.childNodes.forEach((gridElements) => {
+    gridElements.addEventListener("mouseup", removeColorGrid)
+})
+}
+
+function removeColorGrids() {
+    grid.childNodes.forEach((gridElements) => {
+        gridElements.removeEventListener("mousedown", turnOnColorGrid)
+    })
+    
+    grid.childNodes.forEach((gridElements) => {
+        gridElements.removeEventListener("mouseup", removeColorGrid)
+    })
+}
